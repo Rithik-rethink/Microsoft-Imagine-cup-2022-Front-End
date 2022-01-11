@@ -3,14 +3,19 @@ import React, { useState } from "react";
 import Button from '@material-ui/core/Button';
 import urlParser from "js-video-url-parser";
 import { TextField } from '@material-ui/core';
-import {FormControlLabel,Checkbox} from '@material-ui/core';
+import { FormControlLabel, Checkbox } from '@material-ui/core';
 // import PhotoCamera from '@material-ui/icons/PhotoCamera';
 // import IconButton from '@material-ui/core/IconButton';
 
 function App() {
 
-  const checkUrl = () => {
+  const [count, setCount] = useState(0);
+  const [Url, setUrl] = useState('');
+  const [Err, setErr] = useState('');
+  const [Error, setError] = useState(false);
 
+
+  const checkUrl = () => {
     const obj = urlParser.parse(Url);
     console.log(obj);
     const providers = ['youtube', 'facebook', 'soundcloud', 'vimeo', 'wistia', 'mixcloud', 'dailymotion', 'twitch'];
@@ -27,24 +32,22 @@ function App() {
       return true;
     }
     catch (err) {
+      console.log("invalid")
       setErr('Please enter a valid URL');
       return false;
     }
+
   }
 
-  const [count, setCount] = useState(0);
-  const [Url, setUrl] = useState('');
-  const [Err, setErr] = useState('');
-  const [Name , setName] = useState('');
-  const [Query , setQuery] = useState('');
-  const [Error, setError] = useState(false);
-  const [Check , setCheck] = useState(false);
+
   function handleClick(e) {
     e.preventDefault();
     setCount(1);
     // <p>thie link was clicked</p>
     // console.log('The link was clicked.');
   }
+
+
   if (count == 0) {
     return (
 
@@ -96,11 +99,12 @@ function App() {
           <TextField id="outlined-basic" className='col-12 col-sm-12 ' label="Enter URL" type='url' variant="outlined" onChange={(e) => {
             setUrl(e.target.value);
           }} />
-       
 
-        
+
+
           {Error ? <p className='error'><b>{Err}</b></p> : <p></p>}
-          {Check ? <Button variant='contained' className='mt-3' color='primary' style={{ width: '30%' }} onClick={handleClick}>Upload</Button> : <Button variant='contained' className='mt-3' color='primary' disabled style={{ width: '30%' }} onClick={handleClick}>Upload</Button>}
+          <Button variant='contained' className='mt-3' color='primary' style={{ width: '30%' }}>Upload</Button>
+
         </form>
       </div>
 
